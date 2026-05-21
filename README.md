@@ -1,29 +1,55 @@
-# Servidor PeerJS — Jogo do Impostor
+# 🎮 Jogo do Impostor Online
 
-## Deploy no Render (grátis)
+Este é um jogo multiplayer em tempo real, inspirado na dinâmica de "Spyfall" e "Quem Sou Eu?". O projeto permite que amigos joguem juntos remotamente, onde um ou mais jogadores são sorteados como **impostores**. Enquanto os inocentes sabem a palavra secreta, o impostor deve usar a dedução e o blefe para não ser descoberto e tentar adivinhar o tema da rodada.
 
-### Passo a passo:
+O diferencial deste projeto é a utilização de tecnologia **P2P (Peer-to-Peer)**, o que significa que a conexão é feita diretamente entre os jogadores, sem necessidade de um servidor de base de dados centralizado para as partidas.
 
-1. **Crie uma conta** em https://render.com (grátis, pode usar login do GitHub/Google)
+---
 
-2. **Suba este código para o GitHub:**
-   - Crie um repositório novo no GitHub (pode ser privado)
-   - Faça upload de `server.js`, `package.json` e `render.yaml`
+## 🚀 Tecnologias Utilizadas
 
-3. **No Render, crie um novo serviço:**
-   - Clique em **"New +"** → **"Web Service"**
-   - Conecte seu repositório do GitHub
-   - O Render vai detectar o `render.yaml` automaticamente
-   - Clique em **"Create Web Service"**
+### Frontend (Cliente)
+* **HTML5 & CSS3**: Estrutura e estilização moderna com sistema de variáveis  para gestão de cores 
+* **JavaScript (Vanilla)**: Lógica principal do jogo, manipulação do DOM e gestão de estados.
+* **PeerJS**: Biblioteca utilizada para facilitar a comunicação WebRTC, permitindo que o navegador de um jogador (Host) comunique diretamente com os outros (Clients).
 
-4. **Aguarde o deploy** (leva ~2 minutos)
+---
 
-5. **Copie a URL** do seu serviço (ex: `https://impostor-peer-server.onrender.com`)
+## 📜 Funcionalidades
 
-6. **Atualize o `script.js` do jogo:**
-   - Encontre a variável `PEER_SERVER_URL` no topo do arquivo
-   - Substitua pela sua URL do Render
+* **Multiplayer P2P em Tempo Real**: Conexão instantânea via IDs de sala gerados pelo PeerJS.
+* **Sistema de Sorteio Semeado (Seeded Random)**: Garante que, mesmo numa rede descentralizada, todos os jogadores recebam a mesma categoria e a palavra correta (ou a função de impostor) de forma sincronizada através de uma *seed* matemática.
+* **Categorias Diversificadas**
 
-### ⚠️ Observação sobre o plano gratuito do Render:
-O servidor "dorme" após 15 minutos sem uso. A primeira conexão pode demorar ~30 segundos para acordar.
-Para evitar isso, o jogo já inclui lógica de reconexão automática.
+* **Configuração de Partida**: O líder pode definir livremente o número de jogadores e a quantidade de impostores.
+* **Interface Responsiva**: Design adaptável para dispositivos móveis e desktop.
+
+---
+
+## 🛠️ Como Rodar o Projeto Localmente
+
+
+1.  **Clonar o Repositório**:
+    ```bash
+    git clone [https://github.com/teu-utilizador/jogo-do-impostor.git](https://github.com/teu-utilizador/jogo-do-impostor-v2.git)
+    cd jogo-do-impostor
+    ```
+
+2.  **Executar**:
+    * Basta abrir o ficheiro `index.html` em qualquer navegador moderno.
+    * Para uma experiência completa em rede, recomenda-se usar um servidor local simples (como a extensão "Live Server" do VS Code).
+
+---
+
+## 🕹️ Como Jogar
+
+1.  **Criar Sala**: O Host escolhe as definições e clica em "Gerar Sala Online". Um link exclusivo será gerado.
+2.  **Entrar**: Os amigos acedem ao link e aguardam a ligação ao líder.
+3.  **Revelação**: Quando o jogo começa, cada um clica no seu número de jogador para revelar a sua função secretamente.
+4.  **O Jogo**: Os jogadores fazem perguntas entre si. O objetivo dos inocentes é encontrar o impostor; o objetivo do impostor é sobreviver ou adivinhar a palavra.
+
+---
+
+
+
+**👨‍💻 Autor:** Pietro Santos
