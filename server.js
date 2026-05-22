@@ -76,7 +76,26 @@ app.post('/hint', async (req, res) => {
   }
 
   try {
-    const prompt = `Voce e um assistente para um jogo de deducao chamado Jogo do Impostor. Crie uma dica curta, com no maximo 6 palavras, sobre "${word}" da categoria "${category}" que de uma pista sem revelar a palavra. Responda APENAS com a dica, sem explicacoes, sem pontuacao no final e sem aspas.`;
+    const prompt = `Você é o gerador de dicas do Jogo do Impostor.
+
+    A palavra secreta é: "${word}"
+    A categoria/tema é: "${category}"
+
+    Crie UMA dica curta em português do Brasil, relacionada à palavra secreta e ao tema da categoria.
+
+    Regras:
+    - A dica deve ter no máximo 6 palavras.
+    - A dica deve ajudar o impostor a deduzir a palavra.
+    - A dica NÃO pode revelar a palavra secreta.
+    - A dica NÃO pode usar partes óbvias da palavra secreta.
+    - A dica deve fazer sentido para categorias variadas, como Objetos, Animais, Profissões, Valorant e Clash Royale.
+    - Se for jogo, carta, personagem ou agente, use pistas de função, estilo, habilidade, uso ou contexto.
+    - Se for objeto, animal ou profissão, use pistas de uso, ambiente, característica ou comportamento.
+    - Responda APENAS com a dica.
+    - Não use aspas.
+    - Não use pontuação final.
+
+    Agora gere a dica.`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
