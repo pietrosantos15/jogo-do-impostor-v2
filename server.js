@@ -21,7 +21,7 @@ app.post('/hint', async (req, res) => {
   }
 
   try {
-    const prompt = `Você é um assistente para um jogo de dedução chamado Jogo do Impostor. Crie uma dica curta (máximo 6 palavras) sobre "${word}" da categoria "${category}" que dê uma pista sem revelar a palavra. Responda APENAS com a dica, sem explicações, sem pontuação no final, sem aspas.`;
+    const prompt = `Você é um assistente para um jogo de dedução chamado Jogo do Impostor. Crie uma dica curta, com no máximo 6 palavras, sobre "${word}" da categoria "${category}" que dê uma pista sem revelar a palavra. Responda APENAS com a dica, sem explicações, sem pontuação no final e sem aspas.`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
@@ -62,33 +62,24 @@ app.post('/hint', async (req, res) => {
   }
 });
 
-    const data = await response.json();
-    const hint = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
-    res.json({ hint });
-  } catch (e) {
-    console.error('Erro Gemini:', e);
-    res.status(500).json({ error: 'Erro ao gerar dica' });
-  }
-});
-
 const PORT = process.env.PORT || 9000;
 
 const server = app.listen(PORT, () => {
-  console.log(Servidor rodando na porta ${PORT});
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
 
 const peerServer = ExpressPeerServer(server, {
   path: '/',
   allow_discovery: false,
-  proxied: true,
+  proxied: true
 });
 
 app.use('/peerjs', peerServer);
 
 peerServer.on('connection', (client) => {
-  console.log(Cliente conectado: ${client.getId()});
+  console.log(`Cliente conectado: ${client.getId()}`);
 });
 
 peerServer.on('disconnect', (client) => {
-  console.log(Cliente desconectado: ${client.getId()});
+  console.log(`Cliente desconectado: ${client.getId()}`);
 });
