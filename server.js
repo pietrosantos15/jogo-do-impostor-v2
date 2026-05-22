@@ -31,18 +31,18 @@ function createFallbackHint(word, category) {
   const lowerCategory = cleanCategory.toLowerCase();
 
   const categoryHints = {
-    objetos: ['Usado no dia a dia', 'Fica dentro de casa', 'Voce pode tocar'],
-    valorant: ['Aparece no jogo tatico', 'Tem habilidades especiais', 'Faz parte do Valorant'],
-    profissoes: ['Alguem trabalha com isso', 'Exige uma habilidade especifica', 'Pode ser uma carreira'],
-    animais: ['Ser vivo da natureza', 'Pode aparecer em zoologico', 'Tem instintos proprios'],
-    'clash royale': ['Carta de batalha', 'Usado na arena', 'Tem custo de elixir']
+    objetos: ['Aparelho parecido', 'Utensilio proximo', 'Item domestico'],
+    valorant: ['Agente parecido', 'Mesma funcao', 'Habilidade parecida'],
+    profissoes: ['Trabalho parecido', 'Mesmo ambiente', 'Ferramenta comum'],
+    animais: ['Bicho parecido', 'Mesmo habitat', 'Comportamento parecido'],
+    'clash royale': ['Carta parecida', 'Mesma funcao', 'Mesmo elixir']
   };
 
   const genericHints = [
-    `Pertence a ${cleanCategory}`,
-    'Pense na categoria escolhida',
-    'Algo bem conhecido',
-    'Tem caracteristicas marcantes'
+    `Parecido com ${cleanCategory}`,
+    'Mesmo contexto',
+    'Ideia parecida',
+    'Algo relacionado'
   ];
 
   const options = categoryHints[lowerCategory] || genericHints;
@@ -59,7 +59,7 @@ function cleanHint(text) {
     .replace(/^["']+|["']+$/g, '')
     .replace(/[.!?]+$/g, '')
     .split(/\s+/)
-    .slice(0, 6)
+    .slice(0, 3)
     .join(' ');
 }
 
@@ -76,26 +76,44 @@ app.post('/hint', async (req, res) => {
   }
 
   try {
-    const prompt = `Você é o gerador de dicas do Jogo do Impostor.
+    const prompt = `Voce e o gerador de pistas do Jogo do Impostor.
 
-    A palavra secreta é: "${word}"
-    A categoria/tema é: "${category}"
+Palavra secreta: "${word}"
+Categoria/tema: "${category}"
 
-    Crie UMA dica curta em português do Brasil, relacionada à palavra secreta e ao tema da categoria.
+Responda com UMA palavra ou expressao curta que lembre a palavra secreta, seja parecida, relacionada ou do mesmo contexto, mas sem revelar a palavra secreta.
 
-    Regras:
-    - A dica deve ter no máximo 6 palavras.
-    - A dica deve ajudar o impostor a deduzir a palavra.
-    - A dica NÃO pode revelar a palavra secreta.
-    - A dica NÃO pode usar partes óbvias da palavra secreta.
-    - A dica deve fazer sentido para categorias variadas, como Objetos, Animais, Profissões, Valorant e Clash Royale.
-    - Se for jogo, carta, personagem ou agente, use pistas de função, estilo, habilidade, uso ou contexto.
-    - Se for objeto, animal ou profissão, use pistas de uso, ambiente, característica ou comportamento.
-    - Responda APENAS com a dica.
-    - Não use aspas.
-    - Não use pontuação final.
+Regras:
+- A resposta deve ter no maximo 3 palavras.
+- Nao use a palavra secreta.
+- Nao use partes obvias da palavra secreta.
+- Nao explique nada.
+- Nao use aspas.
+- Nao use pontuacao final.
+- Para Objetos, use algo de uso, ambiente ou formato parecido.
+- Para Animais, use outro animal, habitat, comportamento ou caracteristica relacionada.
+- Para Profissoes, use local de trabalho, ferramenta ou profissao parecida.
+- Para Valorant, use funcao, estilo, habilidade ou agente parecido.
+- Para Clash Royale, use carta, tropa, funcao, arena ou mecanica parecida.
 
-    Agora gere a dica.`;
+Exemplos:
+Palavra secreta: Aeroporto
+Categoria/tema: Objetos
+Resposta: Rodoviaria
+
+Palavra secreta: Geladeira
+Categoria/tema: Objetos
+Resposta: Freezer
+
+Palavra secreta: Jett
+Categoria/tema: Valorant
+Resposta: Muito usado
+
+Palavra secreta: Gigante
+Categoria/tema: Clash Royale
+Resposta: Grande
+
+Agora responda apenas com a pista.`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
@@ -105,8 +123,8 @@ app.post('/hint', async (req, res) => {
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
-            maxOutputTokens: 50,
-            temperature: 0.7
+            maxOutputTokens: 30,
+            temperature: 0.8
           }
         })
       }
