@@ -83,37 +83,7 @@ Categoria/tema: "${category}"
 
 Responda com UMA palavra ou expressao curta que lembre a palavra secreta, seja parecida, relacionada ou do mesmo contexto, mas sem revelar a palavra secreta.
 
-Regras:
-- A resposta deve ter no maximo 3 palavras.
-- Nao use a palavra secreta.
-- Nao use partes obvias da palavra secreta.
-- Nao explique nada.
-- Nao use aspas.
-- Nao use pontuacao final.
-- Para Objetos, use algo de uso, ambiente ou formato parecido.
-- Para Animais, use outro animal, habitat, comportamento ou caracteristica relacionada.
-- Para Profissoes, use local de trabalho, ferramenta ou profissao parecida.
-- Para Valorant, use funcao, estilo, habilidade ou agente parecido.
-- Para Clash Royale, use carta, tropa, funcao, arena ou mecanica parecida.
-
-Exemplos:
-Palavra secreta: Aeroporto
-Categoria/tema: Objetos
-Resposta: Rodoviaria
-
-Palavra secreta: Geladeira
-Categoria/tema: Objetos
-Resposta: Freezer
-
-Palavra secreta: Jett
-Categoria/tema: Valorant
-Resposta: Muito usado
-
-Palavra secreta: Gigante
-Categoria/tema: Clash Royale
-Resposta: Grande
-
-Agora responda apenas com a pista.`;
+`;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
